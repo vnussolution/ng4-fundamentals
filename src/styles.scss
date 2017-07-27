@@ -36,3 +36,8 @@ button {
 .toast-warning {
     background-color: #f89406;
 }
+
+@import "assets/superhero-theme/_variables.scss";
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "assets/superhero-theme/_bootswatch.scss";
