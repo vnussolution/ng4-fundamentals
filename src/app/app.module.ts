@@ -6,12 +6,14 @@ import { AlertModule } from 'ngx-bootstrap';
 import { AppComponent } from './app.component';
 import { EventsListComponent } from './events-list/events-list.component';
 import { EventsThumbnailComponent } from './events-thumbnail/events-thumbnail.component';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventsListComponent,
-    EventsThumbnailComponent
+    EventsThumbnailComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
