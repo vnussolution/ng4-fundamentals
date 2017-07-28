@@ -20,9 +20,12 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
+        "../node_modules/toastr/toastr.scss",
         "../node_modules/font-awesome/scss/font-awesome.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/toastr/toastr.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
