@@ -14,7 +14,7 @@ export class EventsThumbnailComponent implements OnInit {
   }
 
   handleClick() {
-    this.eventClick11.emit('testing');
+    this.eventClick11.emit(this.event.name);
   }
 
   getStartTimeClass(e) {

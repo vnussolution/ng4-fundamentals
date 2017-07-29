@@ -1,4 +1,4 @@
-<div class="well hoverwell thumbnail">
+<div class="well hoverwell thumbnail" [routerLink]="['/events',event.id]">
   <h2 [ngStyle]="getNameStyle()">{{event.name}}</h2>
   <div>Date: {{event.date}}</div>
   <div [ngClass]="getStartTimeClass(event)" [ngSwitch]="event?.time">Time: {{event.time}}
