@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+
 
 
 import { AlertModule } from 'ngx-bootstrap';
-// import { ToastrModule, ToastrService } from 'ngx-toastr';
-//import {  } from 'toastr'
 
 import { AppComponent } from './app.component';
 import { EventsListComponent } from './events-list/events-list.component';
@@ -20,6 +20,9 @@ import { EventRouteActivator } from './event-details/event-route-activator.servi
 import { appRoutes } from './routes';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { Error404Component } from './error/404.component';
+import { EventListResolver } from './events-list/events-list-resolver.service';
+import { AuthService } from './user/auth.service';
+
 
 
 @NgModule({
@@ -33,22 +36,24 @@ import { Error404Component } from './error/404.component';
     Error404Component
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     AlertModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [EventService, ToastrService, EventRouteActivator,
+  providers: [AuthService, EventListResolver, EventService, ToastrService, EventRouteActivator,
     {
       provide: 'canDeactivateCreateEvent',
-      useValue: checkDirtyState
+      useValue: checkDirtyState,
     }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-function checkDirtyState(component: CreateEventComponent) {
+export function checkDirtyState(component: CreateEventComponent) {
   if (component.isDirty)
     return window.confirm('yes no ');
   return true;
