@@ -22,6 +22,8 @@ import { CreateEventComponent } from './create-event/create-event.component';
 import { Error404Component } from './error/404.component';
 import { EventListResolver } from './events-list/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
+import { CreateSessionComponent } from './event-details/create-session.component';
+import { SessionListComponent } from './event-details/session-list.component'
 
 
 
@@ -33,7 +35,9 @@ import { AuthService } from './user/auth.service';
     NavComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
+    CreateSessionComponent,
+    SessionListComponent
   ],
   imports: [
     FormsModule,
