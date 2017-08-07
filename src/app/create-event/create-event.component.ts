@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router'
 
 import { EventService } from '../shared/event.service'
@@ -14,6 +14,7 @@ import { EventService } from '../shared/event.service'
 })
 export class CreateEventComponent implements OnInit {
   isDirty: boolean = true;
+  newEventForm: any;
   constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
@@ -23,9 +24,13 @@ export class CreateEventComponent implements OnInit {
   }
 
   saveEvent(formValues) {
-    this.isDirty = false;
-    console.log(formValues)
-    this.eventService.saveEvent(formValues);
-    this.router.navigate(['/events']);
+    this.eventService.saveEvent(formValues).subscribe(e => {
+      this.router.navigate(['/events']);
+      this.isDirty = false;
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('create-event', this.newEventForm)
   }
 }

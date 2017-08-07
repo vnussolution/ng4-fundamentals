@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../user/auth.service'
+import { EventService } from '../shared/event.service'
+import { ISession } from '../shared/event.model'
 
 @Component({
   selector: 'nav',
@@ -8,10 +10,19 @@ import { AuthService } from '../user/auth.service'
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-  constructor(private auth: AuthService) { }
+
+  searchingTerm: string = "";
+  foundSessions: ISession[] = [];
+  constructor(private eventService: EventService, private auth: AuthService) { }
 
 
   ngOnInit() {
   }
 
+  searchSessions(term) {
+    this.eventService.searchSessions(term).subscribe(
+      sessions => {
+        this.foundSessions = sessions;
+      });
+  }
 }

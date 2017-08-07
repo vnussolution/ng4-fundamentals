@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-
+import { TOASTR_TOKEN, Toastr } from '../common/toastr.service'
 import { EventService } from '../shared/event.service';
-import { ToastrService } from '../common/toastr.service';
 import { IEvent } from '../shared/event.model'
 
 @Component({
@@ -11,10 +10,11 @@ import { IEvent } from '../shared/event.model'
 })
 export class EventsListComponent implements OnInit {
   events1: IEvent[];
+  myAlert: boolean;
 
 
   constructor(private eventSerivce: EventService,
-    private toastrService: ToastrService,
+    @Inject(TOASTR_TOKEN) private toastr: Toastr,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -24,6 +24,9 @@ export class EventsListComponent implements OnInit {
 
   handleEventClicked(eventName) {
     console.log('received:', eventName);
-    this.toastrService.success('great..123 ' + eventName, 'my title');
+    this.toastr.success('great..123 ' + eventName, 'my title');
+  }
+  showAlert() {
+    this.myAlert = false;
   }
 }

@@ -1,35 +1,127 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Subject, Observable } from 'rxjs/rx';
 
-import { IEvent } from '../shared/event.model';
+import { IEvent, ISession } from '../shared/event.model';
+import { Http, Response, Headers, RequestOptions } from '@angular/http'
 
 
 
 @Injectable()
 export class EventService {
+    constructor(private http: Http) { }
 
     getEvents(): Observable<IEvent[]> {
-        let subject = new Subject<IEvent[]>();
-        setTimeout(() => { subject.next(EVENTS); subject.complete(); }, 1000);
-        return subject;
+        // let subject = new Subject<IEvent[]>();
+        // setTimeout(() => { subject.next(EVENTS); subject.complete(); }, 1000);
+        // return subject;
+
+
+        return this.http.get('https://young-ravine-79636.herokuapp.com/api/events')
+            .map((response: Response) => {
+                return <IEvent>response.json();
+            }).catch(this.handleError);
+
     }
-    getEvent(id: number): IEvent {
+    getEventOld(id: number): IEvent {
         console.log('---===', EVENTS[0].id === id);
         return EVENTS.find(event => event.id === id);
     }
 
-    saveEvent(event) {
-        event.id = 12;
-        event.session = [];
-        EVENTS.push(event);
+    getEvent(id: number): Observable<IEvent> {
+        console.log('getEvent ID ::', id);
+        return this.http.get('https://young-ravine-79636.herokuapp.com/api/events/' + id)
+            .map((response: Response) => {
+                console.log('return from server', response);
+                return <IEvent>response.json();
+            })
+            .catch(this.handleError);
+
     }
 
-    updateEvent(event) {
-        let index = EVENTS.findIndex(x => x.id == event.id);
-        console.log('EventService::', index);
-        EVENTS[index] = event;
+    saveEvent(event): Observable<IEvent> {
+
+        let headers = new Headers({ 'Content-type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('https://young-ravine-79636.herokuapp.com/api/events/', event, options)
+            .map((response: Response) => {
+                if (event.id) {
+                    let index = EVENTS.findIndex(x => x.id == event.id);
+                    EVENTS[index] = event;
+                } else {
+                    EVENTS.push(<any>response);
+                }
+
+                return response.json()
+            }
+            ).catch(this.handleError);
+    }
+
+    // updateEvent(event) {
+    //     let index = EVENTS.findIndex(x => x.id == event.id);
+    //     EVENTS[index] = event;
+    // }
+
+
+    searchSessions(term: string) {
+
+        return this.http.get('https://young-ravine-79636.herokuapp.com/api/sessions/search?search=' + term)
+            .map((response: Response) => response.json())
+            .catch(this.handleError);
+
+
+        /////// this code is commented out to replace real http call///////////
+        // let searchTerm = term.toLocaleLowerCase();
+        // let results: ISession[] = [];
+
+        // EVENTS.forEach(event => {
+        //     let matchingSessions = event.sessions.filter(
+        //         session => session.name.toLocaleLowerCase().indexOf(searchTerm) > -1);
+
+        //     //a quick way to add eventId to sessions
+        //     matchingSessions = matchingSessions.map((session: any) => {
+        //         session.eventId = event.id;
+        //         return session;
+        //     });
+        //     results = results.concat(matchingSessions);
+        // });
+
+        // let emitter = new EventEmitter(true);//true means emitter async
+        // setTimeout(() => { emitter.emit(results) }, 100);
+        // return emitter;
+    }
+
+    private handleError(error: Response) {
+        console.log('/Events/id/ ERROR::', error);
+        return Observable.throw(error.statusText);
     }
 }
+
+////////////// ng2-fundamental ///////////////////////////////
+// app.get('/events', (req, res) => {
+//     res.send(EVENTS);
+// });
+
+// app.get('/events/:id', (req, res) => {
+//     var id = +req.params.id;
+//     var result;
+//     result = EVENTS.find(event => event.id === id);
+//     if (!result) return res.status(404).send('Id not found');
+//     res.send(result);
+// });
+
+// app.post('/event', (req, res) => {
+
+
+// });
+
+// app.put('/event', (req, res) => {
+
+
+// })
+
+///////////////////////////////////////////
+
+
 
 const EVENTS: IEvent[] = [
     {
