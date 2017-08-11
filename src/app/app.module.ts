@@ -1,3 +1,5 @@
+import './rxjs-extensions';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {
@@ -29,7 +31,7 @@ import {
 import {
   EventService
 } from './shared/event.service';
-import { TOASTR_TOKEN, JQ_TOKEN, Toastr } from './common/toastr.service';
+import { JQ_TOKEN, ToastrService } from './common/toastr.service';
 import {
   CollapsibleWellComponent
 } from './common/collapsible-well.component';
@@ -78,8 +80,11 @@ import { VoterService } from './event-details/voter.service';
 import { LocationValidatorDirective } from './create-event/location-validator.directive'
 import { HttpModule } from '@angular/http'
 
-declare let toastr: Toastr;
-declare let jQuery: Object;
+//declare let toastr: Toastr;
+// declare let jQuery: Object;
+
+let jQuery: Object = window['$'];
+
 @NgModule({
   declarations: [AppComponent,
     EventsListComponent,
@@ -109,7 +114,8 @@ declare let jQuery: Object;
     VoterService,
     EventListResolver,
     EventService,
-    { provide: TOASTR_TOKEN, useValue: toastr },
+    ToastrService,
+    //{ provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
     EventRouteActivator, {
       provide: 'canDeactivateCreateEvent', useValue: checkDirtyState,

@@ -13,7 +13,7 @@ export class NavComponent implements OnInit {
 
   searchingTerm: string = "";
   foundSessions: ISession[] = [];
-  constructor(private eventService: EventService, private auth: AuthService) { }
+  constructor(private eventService: EventService, public auth: AuthService) { }
 
 
   ngOnInit() {

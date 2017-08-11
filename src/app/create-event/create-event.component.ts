@@ -15,6 +15,8 @@ import { EventService } from '../shared/event.service'
 export class CreateEventComponent implements OnInit {
   isDirty: boolean = true;
   newEventForm: any;
+  event: any = { location: {} };
+
   constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {

@@ -25,8 +25,6 @@ export class ModalTriggerDirective implements OnInit {
             // $('#simple-modal').modal({});
         });
     }
-
-
 }
 
 

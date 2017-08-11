@@ -2,7 +2,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router, CanActivate } from '@angular/router';
 import { EventService } from '../shared/event.service';
-import { Subject, Observable } from 'rxjs/rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class EventResolver implements Resolve<any>{

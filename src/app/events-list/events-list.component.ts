@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { TOASTR_TOKEN, Toastr } from '../common/toastr.service'
+import { ToastrService } from '../common/toastr.service'
 import { EventService } from '../shared/event.service';
 import { IEvent } from '../shared/event.model'
 
@@ -14,7 +14,8 @@ export class EventsListComponent implements OnInit {
 
 
   constructor(private eventSerivce: EventService,
-    @Inject(TOASTR_TOKEN) private toastr: Toastr,
+    //  @Inject(TOASTR_TOKEN) private toastr: Toastr,
+    private toastr: ToastrService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {

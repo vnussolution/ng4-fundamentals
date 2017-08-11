@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'
 
 import { ISession } from '../shared/event.model';
-import { Observable } from 'rxjs/rx'
+import { Observable } from 'rxjs/Observable'
 
 
 @Injectable()
